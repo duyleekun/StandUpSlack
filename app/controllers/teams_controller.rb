@@ -24,6 +24,8 @@ class TeamsController < ApplicationController
   end
 
   def send_digest
+    @team.update_users
+    @team.users.includes(:team).each(&:fetch_tasks)
     text = render_to_string(:formats => [:text], locals: {team: @team})
     @team.users.where(daily_digest_enabled: true).includes(:team).each do |user|
       user.send_im(text)
