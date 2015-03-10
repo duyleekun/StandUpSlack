@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Real name:</strong>
+  <%= @user.real_name %>
+</p>
+
+<p>
+  <strong>Team:</strong>
+  <%= @user.team_id %>
+</p>
+
+<p>
+  <strong>Slack:</strong>
+  <%= @user.slack_id %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

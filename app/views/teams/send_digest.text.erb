@@ -1,0 +1,15 @@
+*<%= team.name.upcase %>* daily digest on _<%= 1.day.ago.strftime("%B %d, %Y") %>_
+
+
+<% team.users.where(daily_prompt_active: true).each do |user| %>
+
+*<%= user.name %>* _<%= user.real_name %>_
+    <% tasks = team.tasks.where('tasks.user_id = ? AND tasks.created_at > ?', user.id, 1.day.ago).order(type: :asc)%>
+    <% if !tasks.empty? %>
+<% tasks.each do |task| %>
+> <%= slackify_task(task) %>
+<% end %>
+    <% else %>
+<%= "> _Didn't answer_"  %>
+    <% end %>
+<% end %>
