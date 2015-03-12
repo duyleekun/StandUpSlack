@@ -27,6 +27,17 @@
     <%= f.label :slack_id %><br>
     <%= f.text_field :slack_id %>
   </div>
+
+    <div class="field">
+        <%= f.label :daily_prompt_active %><br>
+        <%= f.check_box :daily_prompt_active %>
+    </div>
+
+    <div class="field">
+        <%= f.label :daily_digest_enabled %><br>
+        <%= f.check_box :daily_digest_enabled %>
+    </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>
