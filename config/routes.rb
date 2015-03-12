@@ -3,8 +3,10 @@ Rails.application.routes.draw do
 
   resources :teams do
     member do
-      get 'send_prompt'
-      get 'send_digest'
+      post 'send_prompt'
+      post 'send_digest'
+      post 'update_users'
+      post 'fetch_tasks'
     end
   end
 

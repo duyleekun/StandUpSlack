@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  before_action :set_team, only: [:show, :edit, :update, :destroy, :send_digest, :send_prompt]
+  before_action :set_team, only: [:show, :edit, :update, :destroy, :send_digest, :send_prompt, :update_users,:fetch_tasks]
 
   # GET /teams
   def index
@@ -20,6 +20,20 @@ class TeamsController < ApplicationController
     @team.users.where(daily_prompt_active: true).includes(:team).each do |user|
       user.send_im(text)
     end
+    render json: {success: true}
+  end
+
+  def test
+    render json: {success: true}
+  end
+
+  def update_users
+    @team.update_users
+    render json: {success: true}
+  end
+
+  def fetch_tasks
+    @team.fetch_tasks
     render json: {success: true}
   end
 

@@ -8,6 +8,10 @@ class Team < ActiveRecord::Base
     @_client ||= Slack::RPC::Client.new(self.token)
   end
 
+  def fetch_tasks
+    self.users.includes(:team).each(&:fetch_tasks)
+  end
+
   before_validation do
     response = client.auth.test.body
     raise 'Invalid token' unless response['ok']
