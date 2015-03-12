@@ -14,13 +14,9 @@ class User < ActiveRecord::Base
     self.team.client.im.mark(channel: self.im_slack_id, ts: Time.now.to_f.to_s)
   end
 
-  def fetch_tasks
-    self.team.client.im.history(channel: self.im_slack_id, oldest: 1.day.ago.to_i).body['messages'].map do |message|
-      if message['user'] == self.slack_id
-        puts message
-        time = Time.at(message['ts'].to_f)
-        Task.find_or_create_by(created_at: time, updated_at: time, user_id: self.id, description: message['text'])
-      end
+  def fetch_tasks(oldest = 1.day.ago)
+    self.team.client.im.history(channel: self.im_slack_id, oldest: oldest.to_i).body['messages'].map do |message|
+      Task.create_from_message(message)
     end
     mark_as_read
   end
