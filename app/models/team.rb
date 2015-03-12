@@ -27,7 +27,7 @@ class Team < ActiveRecord::Base
   def update_users
     client.users.list.body['members'].each do |member|
       puts member
-      unless member['is_bot']
+      unless member['is_bot'] || member['deleted']
         user = User.find_or_initialize_by(slack_id: member['id'], team_id: self.id)
         user.name = member['name']
         user.real_name = member['real_name']
